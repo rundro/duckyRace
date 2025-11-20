@@ -574,8 +574,8 @@ class DuckRace {
 
       // Use local files in the ffmpeg-core directory
       await this.ffmpeg.load({
-        coreURL: "ffmpeg-core",
-        wasmURL: "ffmpeg-core",
+        coreURL: "ffmpeg-core.js",
+        wasmURL: "ffmpeg-core.wasm",
       });
 
       // Store fetchFile utility for later use
