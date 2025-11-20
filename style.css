@@ -1,0 +1,694 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 30px;
+  text-align: center;
+  color: white;
+}
+
+header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 1.2em;
+  opacity: 0.95;
+}
+
+.controls-panel {
+  padding: 30px 30px 10px 30px;
+  background: white;
+  max-width: 1064px;
+  margin: 0 auto;
+}
+
+/* Row 1: Settings - All same height and style */
+.settings-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Make ALL inputs look the same */
+.control-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: white;
+  color: #495057;
+  cursor: text;
+}
+
+.control-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Customize duck names button */
+.customize-btn {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: white;
+  color: #6c757d;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customize-btn:hover {
+  border-color: #adb5bd;
+  background: #f8f9fa;
+}
+
+.customize-btn #toggleIcon {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Duck names section */
+.duck-names {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+  padding: 20px;
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.duck-names.collapsed {
+  display: none;
+}
+
+.duck-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.duck-input span {
+  font-size: 22px;
+}
+
+.duck-input input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.duck-input input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Row 2: Action Buttons - Same width, same height */
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 0;
+}
+
+/* Export Section - Below Canvas, matches button style */
+.export-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  align-items: start;
+  padding: 30px;
+  padding-bottom: 20px;
+  background: white;
+  max-width: 1064px;
+  margin: 0 auto;
+}
+
+.export-preview-inline {
+  grid-column: 1 / -1;
+  margin-top: 15px;
+  display: none; /* Hidden until video is ready */
+}
+
+.export-preview-inline.show {
+  display: block;
+}
+
+.export-preview-inline #exportMedia {
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: transparent; /* No grey background */
+}
+
+.export-preview-inline #exportMedia:empty {
+  display: none; /* Hide if empty */
+}
+
+.export-preview-inline #exportMedia video {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.export-preview {
+  max-width: 1064px;
+  margin: 0 auto;
+  padding: 0 30px 30px 30px;
+  text-align: center;
+}
+
+.export-instructions {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+#exportMedia {
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 100px;
+  background: #f8f9fa;
+}
+
+#exportMedia img,
+#exportMedia video {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* All buttons same height and consistent styling */
+button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary action - Purple */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Reset button - Dark red gradient */
+.btn-reset {
+  background: linear-gradient(135deg, #c0392b 0%, #8e2d23 100%);
+  color: white;
+}
+
+.btn-reset:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a93226 0%, #7b2419 100%);
+}
+
+/* Mute button */
+.btn-mute {
+  background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+  color: white;
+}
+
+.btn-mute:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a6b0b3 0%, #859596 100%);
+}
+
+/* Stopwatch */
+.stopwatch {
+  font-size: 2em;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 15px;
+  letter-spacing: 2px;
+}
+
+/* Export button - Blue gradient */
+.btn-export {
+  background: linear-gradient(135deg, #4facfe 0%, #00a1ff 100%);
+  color: white;
+}
+
+.btn-export:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3a9ae8 0%, #0089d9 100%);
+}
+
+/* Download button - Green gradient */
+.btn-download {
+  background: linear-gradient(135deg, #11998e 0%, #0a7e72 100%);
+  color: white;
+}
+
+.btn-download:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0e8278 0%, #086b60 100%);
+}
+
+.status {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  max-width: 90vw;
+  font-size: 15px;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.info {
+  background: #0c5460;
+  color: white;
+}
+
+.status.success {
+  background: #155724;
+  color: white;
+}
+
+.race-container {
+  padding: 30px 30px 10px 30px;
+  margin: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+#raceCanvas {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  display: block;
+}
+
+.countdown-overlay {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1000px, calc(100% - 60px));
+  aspect-ratio: 1000 / 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.countdown-text {
+  font-size: 150px;
+  font-weight: bold;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+}
+
+.countdown-text.go {
+  font-size: 140px;
+  color: #4caf50;
+  -webkit-text-stroke: 4px black;
+}
+
+.results {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  pointer-events: none;
+  z-index: 20; /* Above canvas and all race elements */
+}
+
+.results.show {
+  display: flex;
+}
+
+.results-overlay {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  pointer-events: auto;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.results-overlay h2 {
+  color: #495057;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2em;
+}
+
+.results-overlay ol {
+  list-style: none;
+  counter-reset: position;
+  margin: 0;
+}
+
+.results-overlay li {
+  counter-increment: position;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.results-overlay li:before {
+  content: counter(position);
+  background: #6c757d;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.results-overlay li:nth-child(1):before {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+  font-size: 18px;
+}
+
+.results-overlay li:nth-child(2):before {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+  color: #333;
+}
+
+.results-overlay li:nth-child(3):before {
+  background: linear-gradient(135deg, #cd7f32 0%, #e89a5c 100%);
+  color: white;
+}
+
+.results-overlay .duck-emoji {
+  font-size: 24px;
+}
+
+.results-overlay .duck-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 18px;
+  color: #495057;
+}
+
+.video-preview {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 30px;
+  background: white;
+  text-align: center;
+}
+
+.video-preview h3 {
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.video-preview img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.video-info {
+  margin-top: 15px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .settings-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .export-section {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .export-preview-inline {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    padding: 30px 20px;
+  }
+
+  header h1 {
+    font-size: 2.2em;
+  }
+
+  .subtitle {
+    font-size: 1em;
+  }
+
+  .controls-panel {
+    padding: 20px 20px 5px 20px;
+  }
+
+  .settings-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .duck-names {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    margin-bottom: 12px;
+  }
+
+  .action-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .export-section {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding: 5px 20px 20px 20px;
+  }
+
+  .export-preview {
+    padding: 0 20px 30px 20px;
+  }
+
+  .race-container {
+    padding: 20px 15px 5px 15px;
+    margin: 0;
+    align-items: flex-start;
+  }
+
+  #raceCanvas {
+    border-width: 2px;
+  }
+
+  .countdown-overlay {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1000px, calc(100% - 30px));
+    aspect-ratio: 1000 / 700;
+  }
+
+  .countdown-text {
+    font-size: 100px;
+  }
+
+  .countdown-text.go {
+    font-size: 90px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.8em;
+  }
+
+  header {
+    padding: 25px 15px;
+  }
+
+  .controls-panel {
+    padding: 15px 15px 5px 15px;
+  }
+
+  .control-group label {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .control-group input,
+  .toggle-names-btn,
+  button {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .duck-names {
+    padding: 12px;
+    max-height: 280px;
+  }
+
+  .race-container {
+    padding: 15px 10px 5px 10px;
+    margin: 0;
+    align-items: flex-start;
+  }
+
+  .export-section {
+    padding: 5px 15px 20px 15px;
+  }
+
+  .export-preview {
+    padding: 0 15px 30px 15px;
+  }
+
+  .status {
+    font-size: 13px;
+    padding: 12px 20px;
+  }
+
+  .countdown-overlay {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1000px, calc(100% - 20px));
+    aspect-ratio: 1000 / 700;
+  }
+
+  .countdown-text {
+    font-size: 80px;
+  }
+
+  .countdown-text.go {
+    font-size: 70px;
+  }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ducky Race - FFmpeg Exporter</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🦆 Ducky Race</h1>
+        <p class="subtitle">Create and share exciting duck races!</p>
+        <div id="stopwatch" class="stopwatch" style="display: none">
+          00:00.00
+        </div>
+        <p
+          class="server-warning"
+          id="serverWarning"
+          style="
+            display: none;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 10px;
+          "
+        >
+          ⚠️ Running from file://. Please use a web server (see README)!
+        </p>
+      </header>
+
+      <div class="controls-panel">
+        <!-- Row 1: Settings -->
+        <div class="settings-row">
+          <div class="control-group">
+            <label for="raceDuration">Duration (seconds)</label>
+            <input
+              type="number"
+              id="raceDuration"
+              min="10"
+              max="300"
+              value="10"
+            />
+          </div>
+
+          <div class="control-group">
+            <label for="numDucks">Number of Ducks</label>
+            <input type="number" id="numDucks" min="2" max="20" value="2" />
+          </div>
+
+          <div class="control-group">
+            <label>Customize Names</label>
+            <button id="toggleDuckNames" class="customize-btn">
+              <span id="toggleIcon">▶</span>
+              <span>Click to edit duck names</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Duck names collapsible section -->
+        <div id="duckNames" class="duck-names collapsed"></div>
+
+        <!-- Row 2: Action Buttons -->
+        <div class="action-row">
+          <button id="startRace" class="btn-primary">Start Race</button>
+          <button id="resetRace" class="btn-reset">Reset</button>
+        </div>
+
+        <div id="status" class="status"></div>
+      </div>
+
+      <div class="race-container">
+        <canvas id="raceCanvas"></canvas>
+        <div
+          id="countdownOverlay"
+          class="countdown-overlay"
+          style="display: none"
+        >
+          <div class="countdown-text"></div>
+        </div>
+        <div id="results" class="results"></div>
+      </div>
+
+      <!-- Export Controls - Below Canvas -->
+      <div class="export-section">
+        <button id="exportRace" class="btn-export" disabled>
+          Convert to MP4
+        </button>
+        <button id="downloadRace" class="btn-download" disabled>
+          Download
+        </button>
+        <button
+          id="muteQuacks"
+          class="btn-mute"
+          title="Mute/Unmute quack sounds"
+        >
+          Audio On
+        </button>
+        <div id="exportPreview" class="export-preview-inline">
+          <div id="exportMedia"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="ffmpeg-core/ffmpeg.js"></script>
+    <script src="ffmpeg-core/ffmpeg-util.js"></script>
+    <script src="race.js"></script>
+  </body>
+</html>
